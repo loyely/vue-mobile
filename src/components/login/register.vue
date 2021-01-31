@@ -1,21 +1,31 @@
 <template>
-	<main>
-		<p class="title">注册华硕商城账号</p>
-		<input id="tel" type="tel" placeholder="手机号"/>
-		<input id="yzm" type="text" placeholder="验证码"/>
-		<div id="checkCode" class="code"  @click="createCode(4)">获取验证码</div>
-		<input id="phone" type="text" placeholder="请输入手机验证码"/>
-		<div class="code">手机验证码</div>
-		
-		<p class="check"><input id="box" type="checkbox"/><span>我已阅读并同意</span><span class="blue">ASUS使用条款</span><span>和</span><span class="blue">隐私政策</span></p>
-		<input id="submit1" type="submit" value="注册" @click="sub1"/>
-		
-	</main>
+  <div class="login-container" :style="note">
+    <main>
+      <img class="logo" src="../../assets/img/login/log.jpg" />
+      <input id="tel"  type="tel" placeholder="手机号"/>
+      <input id="yzm" type="text" placeholder="密码"/>
+      <div id="checkCode" class="code"  @click="createCode(4)">获取验证码</div>
+      <input id="phone" type="text" placeholder="验证码"/>
+
+
+      <!--<p class="check"><input id="box" type="checkbox"/><span>我已阅读并同意</span><span class="blue">ASUS使用条款</span><span>和</span><span class="blue">隐私政策</span></p>-->
+      <input id="submit1" type="submit" value="完成注册" @click="sub1"/>
+
+    </main>
+  </div>
 </template>
 
 <script>
 	import { Toast } from 'mint-ui';
 	export default{
+    data(){
+      return{
+        note: {
+          backgroundImage: "url(" + require("../../assets/img/login/backImg.jpg") + ")",
+          backgroundSize: "100% 100%",
+        },
+      }
+    },
 		methods:{
 		    //生成验证码的方法
 		  	createCode(length){
@@ -25,7 +35,7 @@
 		        //所有候选组成验证码的字符，当然也可以用中文的
 		        var codeChars = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
 		        'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
-		        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'); 
+		        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
 		        //循环组成验证码的字符串
 		        for (var i = 0; i < codeLength; i++){
 		            //获取随机验证码下标
@@ -49,7 +59,7 @@
 //				console.log(Obox.checked)
 				//获取显示区生成的验证码
 				var checkCode = document.getElementById("checkCode").innerHTML;
-				
+
 				if(Otel == '' && Oyzm == '' && Ophone == ''){
 					Toast({
 					  message: '请输入',
@@ -100,6 +110,11 @@
 		margin: 0;
 		padding: 0;
 	}
+  .logo{
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 50px;
+  }
 	.title{
 		font-size: 22px;
 		margin-top: 45px;
@@ -143,8 +158,8 @@
          color:white;
          font-size:18px;
          border:0;
-         letter-spacing:1px;            
-         float:right;           
+         letter-spacing:1px;
+         float:right;
          cursor:pointer;
          width:30%;
          margin-right: 3.5%;
@@ -168,5 +183,5 @@
      	width: 25px;
      	vertical-align: middle;
      }
-     
+
 </style>

@@ -1,38 +1,48 @@
 <template>
+  <div class="login-container" :style="note">
 	<main>
-		<img class="logo" src="../../assets/img/login/sigin_logo.png" />
-		<p class="tabbtn">
-			<span v-bind:class="{active:cur == 0}" @click="cur=0">验证码登录</span>
-			<span v-bind:class="{active:cur == 1}" @click="cur=1">账号登录</span>
-		</p>
+    <div style="height: 30px;">
+      <p class="tabbtn">
+        <span v-bind:class="{active:cur == 0}" @click="cur=0" v-show="cur===1">验证码登录</span>
+        <span v-bind:class="{active:cur == 1}" @click="cur=1" v-show="cur===0">账号密码登录</span>
+      </p>
+    </div>
+		<img class="logo" src="../../assets/img/login/log.jpg" />
 		<section v-show="cur==0">
 			<input id="tel" type="tel" placeholder="手机号"/>
 			<input id="yzm" type="text" placeholder="验证码"/>
-			<div id="checkCode" class="code"  @click="createCode(4)">获取验证码</div>
+			<div id="checkCode" class="code"  @click="createCode(4)">发送验证码</div>
+      <div class="forget">
+        <p >
+          <span>忘记密码</span>
+        </p>
+      </div>
 			<input id="submit1" type="submit" value="登录" @click="sub1"/>
-			
-			<router-link to='/register'><p class="res">企业用户注册</p></router-link>
-			<p class="forget">
-				<router-link to='/register'><span>注册ASUS商城账号</span></router-link>
-				<span>|</span>
-				<span>忘记密码</span>
-			</p>
-			<span class="protect">隐私保护政策</span>
+
+			<router-link to='/register'><p class="res">免费注册</p></router-link>
+			<!--<p class="forget">-->
+				<!--<router-link to='/register'><span>注册ASUS商城账号</span></router-link>-->
+			<!--</p>-->
+		<!--	<span class="protect">隐私保护政策</span>-->
 		</section>
 		<section v-show="cur==1">
-			<input id="name" type="tel" placeholder="用户名/邮箱地址/手机号"/>
-			<input id="mm" type="password" placeholder="填写密码"/>
+			<input id="name" type="tel" placeholder="账号"/>
+			<input id="mm" type="password" placeholder="密码"/>
+      <div class="forget">
+        <p >
+          <span>忘记密码</span>
+        </p>
+      </div>
 			<input id="submit2" type="submit" value="登录" @click="sub2"/>
-			
-			<p class="res">企业用户注册</p>
-			<p class="forget">
-				<span>注册ASUS商城账号</span>
-				<span>|</span>
-				<span>忘记密码</span>
-			</p>
-			<span class="protect">隐私保护政策</span>
+
+      <router-link to='/register'><p class="res">免费注册</p></router-link>
+			<!--<p class="forget">-->
+				<!--<span>注册ASUS商城账号</span>-->
+			<!--</p>-->
+			<!--<span class="protect">隐私保护政策</span>-->
 		</section>
 	</main>
+  </div>
 </template>
 
 <script>
@@ -40,7 +50,11 @@
 	export default{
 		data(){
 			return{
-				cur:0
+				cur:1,
+        note: {
+          backgroundImage: "url(" + require("../../assets/img/login/backImg.jpg") + ")",
+          backgroundSize: "100% 100%",
+        },
 			}
 		},
 		methods:{
@@ -53,7 +67,7 @@
 		        //所有候选组成验证码的字符，当然也可以用中文的
 		        var codeChars = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
 		        'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
-		        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'); 
+		        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
 		        //循环组成验证码的字符串
 		        for (var i = 0; i < codeLength; i++){
 		            //获取随机验证码下标
@@ -69,12 +83,13 @@
 		            checkCode.innerHTML = code;
 		        }
 		    },
+
 			sub1(){
 				var Otel = document.getElementById('tel').value
 				var Oyzm = document.getElementById('yzm').value
 				//获取显示区生成的验证码
 				var checkCode = document.getElementById("checkCode").innerHTML;
-				
+
 				if(Otel == '' && Oyzm == ''){
 					Toast({
 					  message: '请输入',
@@ -109,7 +124,7 @@
 			sub2(){
 				var Oname = document.getElementById('name').value
 				var Omm = document.getElementById('mm').value
-				
+
 				if(Oname == '' && Omm == ''){
 					Toast({
 					  message: '请输入',
@@ -162,10 +177,12 @@
 	}
 	.tabbtn{
 		overflow: hidden;
-	}
+    position: relative;
+  }
 	.tabbtn span{
-		margin-top:20px ;
+		margin-top:5px ;
 		font-size: 23px;
+    float:right;
 	}
 	.tabbtn span:nth-of-type(1){
 		display: inline-block;
@@ -188,7 +205,7 @@
 		margin-top: 12px;
 	}
 	input[type=text]{
-		width: 61.5%;
+		width: 60.5%;
 		/*float: left;*/
 		height: 45px;
 		margin-top: 12px;
@@ -207,18 +224,20 @@
 		border-radius: 5px;
 	}
 	.res{
-		width: 30%;
-		float: left;
-		font-size: 13px;
+		font-size: 23px;
 		padding-top: 10px;
 	}
 	.forget{
-		font-size: 13px;
-		padding-top: 10px;
-		float: right;
-		padding-right: 15px;
+    overflow: hidden;
+    position: relative;
 	}
-	
+  .forget span{
+    font-size: 23px;
+    padding-top: 20px;
+    float: right;
+    padding-right: 61px;
+  }
+
 	.protect{
 		display: block;
 		width: 100%;
@@ -228,7 +247,7 @@
 		font-size: 13px;
 		color: #00a8ff;
 	}
-	
+
 	a{
 		color: #333;
 		text-decoration: none;
@@ -237,8 +256,8 @@
          color:white;
          font-size:18px;
          border:0;
-         letter-spacing:1px;            
-         float:right;           
+         letter-spacing:1px;
+         float:right;
          cursor:pointer;
          width:30%;
          margin-right: 3.5%;
